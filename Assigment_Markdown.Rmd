@@ -1,0 +1,152 @@
+---
+title: "Data Science - Assigment"
+author: "Βούτα - Παπαγεωργίου Κατερίνα"
+date: "2023-06-26"
+output: html_document
+---
+
+
+## Εισαγωγή
+
+Σε αυτή την εργασία χρησιμοποιήθηκαν δεδομένα από την Παγκόσμια Τράπεζα και συγκεκριμένα δεδομένα που αφορούσαν την εκπαίδευση ([Education](https://data.worldbank.org/topic/education?end=2022&start=2000&view=chart)). Από αυτά διαχωρίσαμε και αξιοποιήσαμε στοιχεία για 22 Ευρωπαϊκές χώρες και  για το διάστημα 2000 – 2022 . Πιο συγκεκριμένα τα δεδομένα αφορούν την ανεργία (**Unemployment.csv**) , την εισαγωγή παιδιών στην Δευτεροβάθμια εκπαίδευση (**School_Enrollment.csv**) καθώς και το συνόλου του πληθυσμού με ηλικίες 0 έως 14 έτη (**Population_014.csv**) και 15 έως 64 έτη (**Population_15_64.csv**).
+
+
+## Εισαγωγή δεδομένων
+
+Αρχικά έγινε φόρτωση όλων των απαραίτητων βιβλιοθηκών, καθώς και επεξεργασία των δεδομένων προκειμένου τα δεδομένα στα οποία θα καταλήξουμε να είναι tidy.
+
+```{r include=FALSE}
+# Φόρτωση των απαιτούμενων πακέτων
+library(tidyverse)
+library(ggplot2)
+library(dplyr)
+
+# Διαβάζουμε τα αρχεία CSV
+Unemployment <- read_delim("Unemployment.csv", delim = ";")
+Population_teen <- read_delim("Population_014.csv", delim = ";")
+Population_adult <- read_delim("Population_15_64.csv", delim = ";")
+School_Enrollment <- read_delim("School_Enrollment.csv", delim = ";")
+
+# Προβολή των αρχείων
+head(Unemployment)
+head(Population_teen)
+head(Population_adult)
+head(School_Enrollment)
+```
+
+## Δημιουργια Γραφηματων
+
+
+Στη συνέχεια αξιοποιήσαμε τα δεδομένα του αρχείου Unemployment προκειμένου να δημιουργήσουμε ένα scatterplot στο οποίο θα απεικονίζονται τα ποσοστά ανεργίας στην Ελλάδα για συγκεκριμένο χρονικό διάστημα.
+
+
+### **Ποσοστά ανεργίας στην Ελλάδα απο το 2000 εως το 2022**
+```{r echo=FALSE}
+library(ggplot2)
+
+plot <- ggplot(data = Unemployment) +
+  geom_point(mapping = aes(x = Year, y = Greece), color = "blue") +
+  labs(title = "Ποσοστά ανεργίας στην Ελλάδα (2000-2022)")
+
+plot
+```
+
+Έπειτα συνδυάσαμε τα δεδομένα των πινάκων που αναφέρονται στα πληθυσμιακά στοιχεία παιδιών και ενήλικων προκειμένου να παρουσιάσουμε ένα ιστόγραμμα με τον συνολικό πληθυσμό της Ελλάδας ανά τα έτη.
+
+### **Συνολικός Πλυθησμός Ελλάδας** 
+
+```{r echo=FALSE}
+# Υπολογισμός συνολικού πληθυσμού Ελλάδας
+Greece_teen <- data.frame(Year = Population_teen$Year, Greece = Population_teen$Greece)
+Greece_adult <- data.frame(Year = Population_adult$Year, Greece = Population_adult$Greece)
+
+Total_Population <- left_join(Greece_teen, Greece_adult, by = "Year") %>%
+  mutate(Greece = Greece.x + Greece.y) %>%
+  select(Year, Greece)
+
+head(Total_Population)
+
+# Ιστόγραμμα του συνολικού πληθυσμού Ελλάδας
+
+plot <- ggplot(Total_Population, aes(x = Greece)) +
+  geom_histogram(fill = "blue", bins = 10) +
+  labs(title = "Ιστόγραμμα του συνολικού πληθυσμού Ελλάδας", x = "Πληθυσμός", y = "Συχνότητα")
+
+plot
+```
+
+Γενικές πληροφορίες αντλήθηκαν από την [ιστοσελιδα](https://el.wikipedia.org/wiki/%CE%94%CE%B7%CE%BC%CE%BF%CE%B3%CF%81%CE%B1%CF%86%CE%AF%CE%B1_%CF%84%CE%B7%CF%82_%CE%95%CE%BB%CE%BB%CE%AC%CE%B4%CE%B1%CF%82).
+
+
+Τέλος, επεξεργαστήκαμε τα δεδομένα του πίνακα School_Enrollment ωστε να μπορέσουμε να προβάλουμε ένα boxplot με τις Εγγραφές στην Δευτεροβάθμια Εκπαίδευση ανά χωρά για το διάστημα 2000 - 2022 
+
+
+### **Εγγραφες στη Δευτεροβαθμια Εκπαιδευση ανα χωρα**
+```{r echo=FALSE}
+# Μετασχηματισμός του πίνακα School_Enrollment 
+School_Enrollment_long <- School_Enrollment %>%
+  pivot_longer(cols = starts_with("20"), names_to = "Year", values_to = "Enrollment")
+
+# Δημιουργία του boxplot
+ggplot(School_Enrollment_long, aes(x = Country, y = Enrollment)) +
+  geom_boxplot(fill = "blue") +
+  labs(title = "Εγγραφές στη Δευτεροβάθμια Εκπαίδευση", x = "Χώρα", y = "Εγγραφές")
+
+```
+
+## Αναλυση Δεδομενων 
+Στη συνέχεια συνδικάστηκαν στοιχεία από τους διάφορους πίνακες προκειμένου να απαντηθούν τα ζητούμενα.
+
+### Δομή Επανάληψης
+
+Αξιοποιώντας το **Unemployment.csv** και με τη χρήση της map2 δημιουργήσαμε έναν πίνακα με το ποσοστό ανεργίας σε σχέση με τον πληθυσμό της Ελλάδας αν τα έτη.
+Τα αποτελέσματα παρουσιάζονται παρακάτω: 
+
+### **Ποσοστό ανεργίας στην Ελλάδα σε σχέση με τον συνολικό πληθυσμό**
+```{r echo=FALSE}
+Unemployment_Greece <- data.frame(Year = Unemployment$Year, Greece = Unemployment$Greece)
+
+Unemployment_Greece <- Unemployment_Greece %>%
+  mutate(Unemployment_Rate = map2_dbl(Greece, Total_Population$Greece, ~ (.x / .y) * 100))
+
+head(Unemployment_Greece)
+```
+
+Πληροφορίες για την συγκεκριμένη ανάλυση αντλήθηκαν από την βιβλιογραφία. [A.Ιωαννιδης (2022)](https://imegsevee.gr/wp-content/uploads/2023/04/ioannidis_apasxolisi_neon.pdf)
+
+### Κατασκευή συναρτήσεων
+
+Για την κατασκευή μιας συνάρτησης η οποία θα εκμεταλλεύεται έναν πίνακα του οποίου οι γραμμές θα είναι χώρες, χρησιμοποιήσαμε τον πίνακα School_Enrollment και υπολογίσαμε τον μέσο ορό των εγγράφων στην Δευτεροβάθμια Εκπαίδευση όπως φαίνεται παρακάτω. 
+
+### **Υπολογισμός της μέσης εγγραφής στη Δευτεροβάθμια Εκπαίδευση στην Ελλάδα**
+
+```{r echo=FALSE}
+# Υπολογισμός της μέσης εγγραφής στη Δευτεροβάθμια Εκπαίδευση στην Ελλάδα
+my_function <- function(Greece_Enrollment) {
+  mean_enrollment <- apply(Greece_Enrollment[, -1], 2, mean, na.rm = TRUE)
+  return(mean_enrollment)
+}
+
+result <- my_function(School_Enrollment)
+print(result)
+```
+
+Τέλος , χρησιμοποιώντας τους πίνακες School_Enrollment και Population_teen και επιλέγοντας από τον καθένα μόνο τα δεδομένα που αφορούν την Ελλάδα δημιουργήσαμε συνάρτηση η οποία υπολογίζει την αναλογία των παιδιών που εγγράφονται στην δευτεροβάθμια εκπαίδευση σε σχέση με το συνολικό πληθυσμό των παιδιών και λάβαμε τα ακόλουθα αποτελέσματα:
+
+### **Αναλογία εγγραφής στη Δευτεροβάθμια Εκπαίδευση σε σχέση με τον πληθυσμό των παιδιών στην Ελλάδα**
+
+```{r echo=FALSE}
+# Υπολογισμός αναλογίας εγγραφής στη Δευτεροβάθμια Εκπαίδευση σε σχέση με τον πληθυσμό των παιδιών στην Ελλάδα
+ration_function <- function(School_Enrollment, Population_teen) {
+  Greece_Enrollment <- School_Enrollment[School_Enrollment$Country == "Greece", -1]
+  Greece_Population <- Population_teen$Greece
+  
+  ratio <- Greece_Enrollment / Greece_Population
+  
+  return(ratio)
+}
+
+result <- ration_function(School_Enrollment, Population_teen)
+print(result)
+```
+
