@@ -1639,16 +1639,15 @@ display: none;
 δεδομένα. Χρησιμοποιώντας τη γλώσσα R, εκτελούμε αναλύσεις και
 υπολογισμούς πάνω στα δεδομένα, προετοιμάζοντας τα για την
 παρουσίαση.</p>
-</div>
-<div id="r-markdown" class="section level2">
-<h2>R Markdown</h2>
-<p>This is an R Markdown document. Markdown is a simple formatting
-syntax for authoring HTML, PDF, and MS Word documents. For more details
-on using R Markdown see <a href="http://rmarkdown.rstudio.com" class="uri">http://rmarkdown.rstudio.com</a>.</p>
-<p>When you click the <strong>Knit</strong> button a document will be
-generated that includes both content as well as the output of any
-embedded R code chunks within the document. You can embed an R code
-chunk like this:</p>
+<p>Το website <a href="https://data.worldbank.org/indicator" class="uri">https://data.worldbank.org/indicator</a> αποτελεί μία
+πολύτιμη πηγή δεδομένων που παρέχει πληροφορίες για διάφορα οικονομικά
+και κοινωνικά δεδομένα από όλο τον κόσμο. Αυτή η πλατφόρμα ανήκει στην
+Παγκόσμια Τράπεζα και στοχεύει στη συγκέντρωση, οργάνωση και διάθεση
+ανοικτών δεδομένων που σχετίζονται με την ανάπτυξη και την οικονομία των
+χωρών.</p>
+<p>Στα πλέσια της παρακάτω εργασίας χρησιμοποιήθηκαν δεδομέναν απο τα
+δεδομένα υγείας <a href="https://data.worldbank.org/topic/health?view=chart" class="uri">https://data.worldbank.org/topic/health?view=chart</a>.
+Παρακάτω θα βρείτε την αναλυτική εργασία μου.</p>
 <pre class="r"><code>summary(countryTotal)</code></pre>
 <pre><code>##    country               male          Population Female    physicians   
 ##  Length:42          Min.   :   16453   Min.   :   17381   Min.   :    0  
@@ -1664,6 +1663,7 @@ chunk like this:</p>
 ##                    
 ##                    
 ## </code></pre>
+</div>
 <div id="σχεδιαγράμματα" class="section level3">
 <h3>Σχεδιαγράμματα</h3>
 <p>Για να γίνει η παρουσίαση ακόμα πιο πειστική και εύκολη στην
@@ -1770,16 +1770,16 @@ print(merged_data[c(&quot;country&quot;,&quot;PopulationTotal&quot;)])</code></p
   result &lt;- paste0(i,&quot;-&gt; &quot;, random_number)
   print(result)
 }</code></pre>
-<pre><code>## [1] &quot;1-&gt; 61&quot;
-## [1] &quot;2-&gt; 50&quot;
-## [1] &quot;3-&gt; 59&quot;
-## [1] &quot;4-&gt; 42&quot;
-## [1] &quot;5-&gt; 32&quot;
-## [1] &quot;6-&gt; 95&quot;
-## [1] &quot;7-&gt; 65&quot;
-## [1] &quot;8-&gt; 7&quot;
-## [1] &quot;9-&gt; 28&quot;
-## [1] &quot;10-&gt; 63&quot;</code></pre>
+<pre><code>## [1] &quot;1-&gt; 28&quot;
+## [1] &quot;2-&gt; 20&quot;
+## [1] &quot;3-&gt; 68&quot;
+## [1] &quot;4-&gt; 20&quot;
+## [1] &quot;5-&gt; 3&quot;
+## [1] &quot;6-&gt; 79&quot;
+## [1] &quot;7-&gt; 75&quot;
+## [1] &quot;8-&gt; 28&quot;
+## [1] &quot;9-&gt; 62&quot;
+## [1] &quot;10-&gt; 23&quot;</code></pre>
 <p>Σε αυτό το παράδειγμα, η μεταβλητή “i” λαμβάνει τις τιμές από το 1
 έως το 10, και κάθε φορά εκτελείται ο κώδικας μέσα στη for loop, ο
 οποίος εκτυπώνει την τρέχουσα τιμή της μεταβλητής “i”.</p>
@@ -1819,6 +1819,23 @@ sprintf(&quot;Ο παραγοντικός του αριθμού: %s&quot;,  numb
 <pre class="r"><code>print(factorial_result)</code></pre>
 <pre><code>## [1] 24</code></pre>
 </div>
+<div id="reference" class="section level3">
+<h3>Reference</h3>
+<p>[1] J. C. Branco et al., “Prevalence of Fibromyalgia: A Survey in
+Five European Countries,” Seminars in Arthritis and Rheumatism, vol. 39,
+no. 6, pp. 448–453, Jun. 2010, doi:
+10.1016/j.semarthrit.2008.12.003.</p>
+<p>[2] D. M. Mihail and P. V. Kloutsiniotis, “The effects of
+high-performance work systems on hospital employees’ work-related
+well-being: Evidence from Greece,” European Management Journal, vol. 34,
+no. 4, pp. 424–438, Aug. 2016, doi: 10.1016/j.emj.2016.01.005.</p>
+<p>[3] D. Podlekareva et al., “THE EUROSIDA STUDY: REGIONAL DIFFERENCES
+IN THE HIV-1 EPIDEMIC AND TREATMENT RESPONSE TO ANTIRETROVIRAL THERAPY
+AMONG HIV-INFECTED PATIENTS ACROSS EUROPE − A REVIEW OF PUBLISHED
+RESULTS”.</p>
+<p>[4] “Who Smokes in Europe? Data From 12 European Countries in the
+TackSHS Survey (2017–2018).” <a href="https://www.jstage.jst.go.jp/article/jea/31/2/31_JE20190344/_article/-char/ja/" class="uri">https://www.jstage.jst.go.jp/article/jea/31/2/31_JE20190344/_article/-char/ja/</a>
+(accessed Jun. 29, 2023).</p>
 </div>
 
 

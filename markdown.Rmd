@@ -27,12 +27,10 @@ countryTotal <- read_delim("countryTotal.csv", delim = ";")
 total <- read_delim("TotalPopulation.csv", delim = ";")
 ```
 
-## R Markdown
+Το website <https://data.worldbank.org/indicator> αποτελεί μία πολύτιμη πηγή δεδομένων που παρέχει πληροφορίες για διάφορα οικονομικά και κοινωνικά δεδομένα από όλο τον κόσμο. Αυτή η πλατφόρμα ανήκει στην Παγκόσμια Τράπεζα και στοχεύει στη συγκέντρωση, οργάνωση και διάθεση ανοικτών δεδομένων που σχετίζονται με την ανάπτυξη και την οικονομία των χωρών.
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
-
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
-
+Στα πλέσια της παρακάτω εργασίας χρησιμοποιήθηκαν δεδομένα απο τα δεδομένα υγείας <https://data.worldbank.org/topic/health?view=chart>.
+Παρακάτω θα βρείτε την αναλυτική εργασία μου.
 ```{r countryTotal}
 summary(countryTotal)
 ```
@@ -41,7 +39,7 @@ summary(countryTotal)
 
 Για να γίνει η παρουσίαση ακόμα πιο πειστική και εύκολη στην κατανόηση, συμπεριλαμβάνουμε γραφήματα και διαγράμματα που δημιουργούνται επίσης με τη χρήση της γλώσσας R. Τα γραφήματα αυτά βοηθούν στην οπτικοποίηση των δεδομένων και στην εύρυθμη παρουσίαση των αναλύσεων που πραγματοποιούνται.
 
-```{r }
+```{r}
 library(ggplot2)
 plot <- ggplot(data = countryTotal) + 
   geom_point(mapping = aes(x = country, y = male), color = "blue")
@@ -154,3 +152,14 @@ factorial_result <- factorial(number)
 sprintf("Ο παραγοντικός του αριθμού: %s",  number)
 print(factorial_result)
 ```
+
+
+### Reference
+
+[1]	J. C. Branco et al., “Prevalence of Fibromyalgia: A Survey in Five European Countries,” Seminars in Arthritis and Rheumatism, vol. 39, no. 6, pp. 448–453, Jun. 2010, doi: 10.1016/j.semarthrit.2008.12.003.
+
+[2]	D. M. Mihail and P. V. Kloutsiniotis, “The effects of high-performance work systems on hospital employees’ work-related well-being: Evidence from Greece,” European Management Journal, vol. 34, no. 4, pp. 424–438, Aug. 2016, doi: 10.1016/j.emj.2016.01.005.
+
+[3]	D. Podlekareva et al., “THE EUROSIDA STUDY: REGIONAL DIFFERENCES IN THE HIV-1 EPIDEMIC AND TREATMENT RESPONSE TO ANTIRETROVIRAL THERAPY AMONG HIV-INFECTED PATIENTS ACROSS EUROPE − A REVIEW OF PUBLISHED RESULTS”.
+
+[4]	“Who Smokes in Europe? Data From 12 European Countries in the TackSHS Survey (2017–2018).” https://www.jstage.jst.go.jp/article/jea/31/2/31_JE20190344/_article/-char/ja/ (accessed Jun. 29, 2023).
